@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Creator's Intelligence – YouTube AI Assistant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Canva SDKs -->
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script><!-- Your CSS file -->
+  <link rel="stylesheet" href="styles.css">
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body class="theme-dark">
+  <div class="app-container"><!-- Header -->
+   <header class="header">
+    <div class="header-content">
+     <div class="logo">
+      <div class="logo-icon">
+       🎬
+      </div>
+      <div class="logo-text">
+       <h1 id="app-title">Creator's Intelligence</h1>
+       <p id="app-tagline">AI-Powered YouTube Content Generator</p>
+      </div>
+     </div>
+     <nav class="nav-buttons"><button type="button" class="nav-btn" data-nav="landing">Home</button> <button type="button" class="nav-btn" data-nav="input">Create</button> <button type="button" class="nav-btn" data-nav="history">History</button> <button type="button" class="nav-btn" data-nav="settings">Settings</button> <button type="button" class="nav-btn" data-nav="about">About</button>
+     </nav>
+    </div>
+   </header><!-- Toast Notification -->
+   <div id="toast" class="toast"><span id="toast-message"></span> <button type="button" id="toast-close" class="toast-close">Close</button>
+   </div><!-- Main Content -->
+   <main class="main-content"><!-- Landing Screen -->
+    <div id="screen-landing" class="screen active">
+     <div class="hero">
+      <h1 class="hero-title" id="landing-title">Creator's Intelligence</h1>
+      <p class="hero-subtitle" id="landing-tagline">Your AI Partner for YouTube Content Creation</p>
+      <p class="hero-description" id="landing-description">Generate engaging YouTube titles, descriptions, hashtags, and full scripts in seconds. Tailored for your audience, powered by creative AI.</p><button type="button" id="btn-get-started" class="btn btn-primary"> <span id="get-started-text">Get Started</span> <span>→</span> </button>
+     </div>
+     <div class="feature-grid">
+      <div class="feature-card">
+       <div class="feature-icon">
+        🎯
+       </div>
+       <h3 class="feature-title">Smart Titles</h3>
+       <p class="feature-description">Generate 10 click-worthy titles optimized for your niche and audience</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        📝
+       </div>
+       <h3 class="feature-title">SEO Descriptions</h3>
+       <p class="feature-description">Get keyword-rich descriptions that help your videos rank higher</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        🏷️
+       </div>
+       <h3 class="feature-title">Trending Hashtags</h3>
+       <p class="feature-description">Discover 15-20 hashtags combining broad reach and niche targeting</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        🖼️
+       </div>
+       <h3 class="feature-title">Thumbnail Ideas</h3>
+       <p class="feature-description">Creative thumbnail concepts you can design in minutes</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        📜
+       </div>
+       <h3 class="feature-title">Full Scripts</h3>
+       <p class="feature-description">Complete video outlines with intro, chapters, and call-to-action</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        💾
+       </div>
+       <h3 class="feature-title">Save History</h3>
+       <p class="feature-description">Keep all your generated content organized and accessible</p>
+      </div>
+     </div>
+    </div><!-- Input Screen -->
+    <div id="screen-input" class="screen">
+     <div class="card">
+      <h2 class="card-title" id="input-header"><span>✍️</span> Describe your YouTube video</h2>
+      <p class="card-subtitle" id="input-subtitle">The more context you share, the smarter the titles, descriptions, and scripts become.</p>
+      <form id="input-form">
+       <div class="form-group"><label for="topic" class="form-label">Video Topic *</label> <textarea id="topic" name="topic" class="form-textarea" placeholder="E.g. How to grow a YouTube channel from 0 to 10,000 subscribers in 90 days" required></textarea>
+       </div>
+       <div class="form-group"><label for="tone" class="form-label">Tone</label> <select id="tone" name="tone" class="form-select"> <option value="Motivational">Motivational</option> <option value="Funny">Funny</option> <option value="Educational">Educational</option> <option value="Professional">Professional</option> <option value="Trending">Trending</option> </select>
+       </div>
+       <div class="form-group"><label for="audience" class="form-label">Target Audience</label> <select id="audience" name="audience" class="form-select"> <option value="Everyone">Everyone</option> <option value="Students">Students</option> <option value="Creators">Creators</option> <option value="Tech People">Tech People</option> </select>
+       </div>
+       <div class="form-group"><label for="keywords" class="form-label">Keywords (optional)</label> <input type="text" id="keywords" name="keywords" class="form-input" placeholder="E.g. YouTube algorithm, watch time, engagement">
+       </div>
+       <div class="form-group"><label for="videoType" class="form-label">Video Type</label> <select id="videoType" name="videoType" class="form-select"> <option value="Long Video">Long Video</option> <option value="Short Video">Short Video</option> </select>
+       </div><button type="submit" id="btn-generate" class="btn btn-primary"> <span>Generate Content</span> <span>⚡</span> </button>
+      </form>
+     </div>
+    </div><!-- Loading Screen -->
+    <div id="screen-loading" class="screen">
+     <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">AI is generating your content...</p>
+      <div class="loading-steps">
+       <div class="loading-step">
+        <div class="loading-step-number">
+         1
+        </div>
+        <div>
+         <div class="loading-step-text">
+          Generating creative titles
+         </div>
+         <div class="loading-progress">
+          <div id="progress-1" class="loading-progress-bar"></div>
+         </div>
+        </div>
+       </div>
+       <div class="loading-step">
+        <div class="loading-step-number">
+         2
+        </div>
+        <div>
+         <div class="loading-step-text">
+          Optimizing for YouTube SEO
+         </div>
+         <div class="loading-progress">
+          <div id="progress-2" class="loading-progress-bar"></div>
+         </div>
+        </div>
+       </div>
+       <div class="loading-step">
+        <div class="loading-step-number">
+         3
+        </div>
+        <div>
+         <div class="loading-step-text">
+          Creating script outline
+         </div>
+         <div class="loading-progress">
+          <div id="progress-3" class="loading-progress-bar"></div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Output Screen -->
+    <div id="screen-output" class="screen">
+     <div class="card">
+      <div class="card-header">
+       <h2 class="card-title" id="output-header"><span>✨</span> Your AI-Generated Content</h2>
+       <div class="flex gap-1 flex-wrap"><button type="button" id="btn-edit" class="btn btn-secondary btn-small">Edit Input</button> <button type="button" id="btn-regenerate" class="btn btn-secondary btn-small">Regenerate</button> <button type="button" id="btn-save" class="btn btn-success btn-small">Save to History</button> <button type="button" id="btn-export" class="btn btn-secondary btn-small">Export</button>
+       </div>
+      </div>
+      <div class="output-grid"><!-- Titles -->
+       <div class="output-section">
+        <div class="output-section-header">
+         <h3 class="output-section-title"><span>🎯</span> Suggested Titles</h3><button type="button" class="btn btn-secondary btn-small" data-copy="titles">Copy</button>
+        </div>
+        <ul id="output-titles" class="output-list output-content"></ul>
+       </div><!-- Description -->
+       <div class="output-section">
+        <div class="output-section-header">
+         <h3 class="output-section-title"><span>📝</span> Video Description</h3><button type="button" class="btn btn-secondary btn-small" data-copy="description">Copy</button>
+        </div>
+        <div id="output-description" class="output-content"></div>
+       </div><!-- Hashtags -->
+       <div class="output-section">
+        <div class="output-section-header">
+         <h3 class="output-section-title"><span>🏷️</span> Hashtags</h3><button type="button" class="btn btn-secondary btn-small" data-copy="hashtags">Copy</button>
+        </div>
+        <div id="output-hashtags" class="output-content"></div>
+       </div><!-- Thumbnails -->
+       <div class="output-section">
+        <div class="output-section-header">
+         <h3 class="output-section-title"><span>🖼️</span> Thumbnail Ideas</h3>
+        </div>
+        <ul id="output-thumbnails" class="output-list output-content"></ul>
+       </div><!-- Script -->
+       <div class="output-section" style="grid-column: 1 / -1;">
+        <div class="output-section-header">
+         <h3 class="output-section-title"><span>📜</span> Script / Content Outline</h3><button type="button" class="btn btn-secondary btn-small" data-copy="script">Copy</button>
+        </div>
+        <div id="output-script" class="output-content"></div>
+       </div>
+      </div>
+     </div>
+    </div><!-- History Screen -->
+    <div id="screen-history" class="screen">
+     <div class="card">
+      <h2 class="card-title" id="history-header"><span>📚</span> Saved Content History</h2>
+      <p class="card-subtitle">Review what you've generated before. Click a card to view full details.</p>
+     </div>
+     <div id="history-empty" class="empty-state">
+      <div class="empty-state-icon">
+       📭
+      </div>
+      <h3 class="empty-state-title">No saved content yet</h3>
+      <p class="empty-state-description">Once you generate content you like, hit "Save to History" and it will appear here.</p><button type="button" class="btn btn-primary" data-nav="input">Create Your First Content</button>
+     </div>
+     <div id="history-list" class="history-grid" style="display: none;"></div><!-- History Detail Modal -->
+     <div id="history-detail" class="card" style="display: none; margin-top: 1.5rem;">
+      <div class="card-header">
+       <h3 class="card-title">Content Details</h3><button type="button" id="history-detail-close" class="btn btn-secondary btn-small">Close</button>
+      </div>
+      <p id="history-detail-meta" class="card-subtitle"></p>
+      <div class="output-grid mt-2">
+       <div>
+        <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Topic</h4>
+        <p id="history-detail-topic" style="color: var(--text-secondary);"></p>
+       </div>
+       <div>
+        <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Titles</h4>
+        <ul id="history-detail-titles" class="output-list"></ul>
+       </div>
+       <div>
+        <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Description</h4>
+        <p id="history-detail-description" style="color: var(--text-secondary); white-space: pre-line;"></p>
+       </div>
+       <div>
+        <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Hashtags</h4>
+        <p id="history-detail-hashtags" style="color: var(--text-secondary);"></p>
+       </div>
+       <div style="grid-column: 1 / -1;">
+        <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Script</h4>
+        <p id="history-detail-script" style="color: var(--text-secondary); white-space: pre-line;"></p>
+       </div>
+      </div>
+     </div>
+    </div><!-- Settings Screen -->
+    <div id="screen-settings" class="screen">
+     <div class="card">
+      <h2 class="card-title" id="settings-header"><span>⚙️</span> Settings &amp; Personalization</h2>
+      <p class="card-subtitle">Customize your experience</p>
+     </div>
+     <div class="settings-grid">
+      <div class="card">
+       <h3 class="card-title"><span>🎨</span> Theme</h3>
+       <p class="card-subtitle">Choose your preferred color scheme</p>
+       <div class="theme-toggle mt-2"><button type="button" id="theme-dark" class="theme-btn active"> <span>🌙</span> Dark </button> <button type="button" id="theme-light" class="theme-btn"> <span>☀️</span> Light </button>
+       </div>
+      </div>
+      <div class="card">
+       <h3 class="card-title"><span>🤖</span> AI Model</h3>
+       <p class="card-subtitle">Current model: CreatorAI Studio (Demo)</p>
+       <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem;">This is a prototype. In production, you could select different AI models for various content styles.</p>
+      </div>
+     </div>
+    </div><!-- About Screen -->
+    <div id="screen-about" class="screen">
+     <div class="card">
+      <h2 class="card-title" id="about-header"><span>ℹ️</span> About This Project</h2>
+      <p class="card-subtitle">Creator's Intelligence – AI that creates with you</p>
+     </div>
+     <div class="settings-grid">
+      <div class="card">
+       <h3 class="card-title">What it does</h3>
+       <p id="about-body" style="color: var(--text-secondary); line-height: 1.7;">This prototype simulates an AI assistant built for YouTube creators. It walks through the full flow: from entering a video idea, to seeing generated titles, descriptions, hashtags, thumbnail ideas, and a script outline — all in one place.</p>
+      </div>
+      <div class="card">
+       <h3 class="card-title">Technology</h3>
+       <ul style="color: var(--text-secondary); line-height: 1.7; padding-left: 1.25rem;">
+        <li>Single-page application with multi-screen navigation</li>
+        <li>Simulated AI content generation</li>
+        <li>Persistent history storage via Canva Sheet</li>
+        <li>Responsive design for all devices</li>
+        <li>Light and dark theme support</li>
+       </ul>
+      </div>
+      <div class="card">
+       <h3 class="card-title">Purpose</h3>
+       <p style="color: var(--text-secondary); line-height: 1.7;">To showcase the end-to-end journey of an AI tool tailored for YouTube creation, including landing, prompt input, loading state, rich output, history management, and customization options.</p>
+      </div>
+      <div class="card">
+       <h3 class="card-title">Who it's for</h3>
+       <p style="color: var(--text-secondary); line-height: 1.7;">Creators, marketers, educators, and developers who want to imagine what a dedicated YouTube content co-pilot could feel like inside a modern, intuitive interface.</p>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div><!-- Your JavaScript file -->
+  <script src="app.js"></script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a300552c49a6ee0',t:'MTc2Mzg5NDEzNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
